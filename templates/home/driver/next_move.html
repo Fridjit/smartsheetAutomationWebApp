@@ -1,0 +1,39 @@
+{% if current_container_destination == authorised_from_location %}
+    {% if opposite_direction_pending_bobtail %}
+        <div class="boxed_area">
+            <form name="opposite_direction_pending_bobtail" action="/driver" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="scac" value="{{ scac }}"/>
+                <input type="hidden" name="driver_id" value="{{ driver_id }}"/>
+                <label for="confirm_next_bobtail_destination">Bobtail to:</label>
+                    <select name="confirm_next_bobtail_destination" id="confirm_next_bobtail_destination">
+                        {% for location in locations %}
+                            <option value="{{ location }}">{{ location }}</option>
+                        {% endfor %}
+                    </select>
+                <button type="submit">Confirm Bobtail</button>
+                <button name="cancel_next_bobtail_destination" value="CANCEL_BOBTAIL" type="submit">Cancel Bobtail</button><br>
+            </form>
+        </div>
+    {% else %}
+        <div class="boxed_area">
+            <form name="new_opposite_direction_move_id" action="/driver" method="post" enctype="multipart/form-data">
+                {% if opposite_direction_move_id %}
+                    <input type="hidden" name="scac" value="{{ scac }}" />
+                    <input type="hidden" name="driver_id" value="{{ driver_id }}" />
+                    Next: {{ opposite_direction_move_id }}
+                    <button name="new_opposite_direction_move_id" value="UNASSIGN" type="submit">Unassign Next Move</button><br>
+                {% else %}
+                    <input type="hidden" name="scac" value="{{ scac }}" />
+                    <input type="hidden" name="driver_id" value="{{ driver_id }}" />
+                    Next:
+                    <select name="new_opposite_direction_move_id" id="new_opposite_direction_move_id">
+                        {% for move_id in move_ids_opposite_direction %}
+                            <option value="{{ move_id }}">{{ move_id }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Assign Next Move</button><br>
+                {% endif %}
+            </form>
+        </div>
+    {% endif %}
+{% endif %}

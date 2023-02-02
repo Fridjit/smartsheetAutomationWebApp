@@ -1,0 +1,59 @@
+<div class="boxed_area">
+    {% if current_move_id %}
+        <form name="current_container_update" action="/driver" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="scac" value="{{ scac }}" />
+            <input type="hidden" name="driver_id" value="{{ driver_id }}" />
+            <label for="current_move_id_tag">
+                <input type="hidden" name="current_move_id" value="{{ current_move_id }}" />
+                Current move ID: <a href="https://yusen-tracker.com/moves/{{ current_move_id }}">{{ current_move_id }}</a>
+            </label><br>
+            {% if current_move_msg %}
+                {{ current_move_msg }}
+            {% endif %}
+            Container #: {{ current_container_number }} <br>
+            Origin: {{ current_container_origin }} <br>
+            Destination: {{ current_container_destination }} <br>
+            {% if wc_admin %}
+                <button name="update_status" value="CONFIRM_CHECKOUT" type="submit">Confirm Checkout</button><br>
+                <button name="update_status" value="CONFIRM_ARRIVAL" type="submit">Confirm Arrival</button><br>
+                <button name="update_status" value="ISSUE_DAMAGED" type="submit">Container Damaged</button><br>
+                <button name="update_status" value="ISSUE_NOT_FOUND" type="submit">Container Not Found</button><br>
+                <button name="update_status" value="FORCE_TO_COMPLETED" type="submit">Force To Completed</button><br>
+                <button name="update_status" value="UNASSIGN" type="submit">Unassign Container</button><br>
+            {% elif current_container_origin == authorised_from_location %}
+                <button name="update_status" value="CONFIRM_CHECKOUT" type="submit">Confirm Checkout</button>
+                <button name="update_status" value="ISSUE_DAMAGED" type="submit">Container Damaged</button>
+                <button name="update_status" value="ISSUE_NOT_FOUND" type="submit">Container Not Found</button>
+                <button name="update_status" value="UNASSIGN" type="submit">Unassign Container</button><br>
+            {% elif current_container_destination == authorised_from_location %}
+                <button name="update_status" value="CONFIRM_ARRIVAL" type="submit">Confirm Arrival</button>
+                <button name="update_status" value="UNASSIGN" type="submit">Unassign Container</button><br>
+            {% endif %}
+        </form>
+    {% elif current_pending_bobtail %}
+        <form name="confirm_next_bobtail" action="/driver" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="scac" value="{{ scac }}"/>
+            <input type="hidden" name="driver_id" value="{{ driver_id }}"/>
+            <label for="confirm_current_bobtail_destination">Bobtail to:</label>
+                <select name="confirm_current_bobtail_destination" id="confirm_current_bobtail_destination">
+                    {% for location in locations %}
+                        <option value="{{ location }}">{{ location }}</option>
+                    {% endfor %}
+                </select>
+            <button type="submit">Confirm Bobtail</button>
+            <button name="cancel_current_bobtail_destination" value="CANCEL_BOBTAIL" type="submit">Cancel Bobtail</button><br>
+        </form>
+    {% else %}
+        <form name="assign_new_can" action="/driver" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="scac" value="{{ scac }}"/>
+            <input type="hidden" name="driver_id" value="{{ driver_id }}"/>
+            <label for="new_current_move_id">New move ID:</label>
+                <select name="new_current_move_id" id="new_current_move_id">
+                    {% for move_id in move_ids_current_direction %}
+                        <option value="{{ move_id }}">{{ move_id }}</option>
+                    {% endfor %}
+                </select>
+            <button type="submit">Assign container</button><br>
+        </form>
+    {% endif %}
+</div>

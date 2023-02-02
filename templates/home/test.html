@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEST</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+    </style>
+</head>
+<body>
+    {% include "includes/header.html" %}
+    <div class="boxed_area">
+        <form name="change_user_type" action="/test" method="post" enctype="multipart/form-data">
+            <button type="submit" name="change_user_type" value="site_admin">SET SITE ADMIN</button>
+            <button type="submit" name="change_user_type" value="wc_admin">SET WC ADMIN</button>
+            <button type="submit" name="change_user_type" value="gate_operator">SET GATE OP</button>
+        </form>
+    </div>
+</body>
+</html>

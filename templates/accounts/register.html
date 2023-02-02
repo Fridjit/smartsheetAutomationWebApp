@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Page</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="boxed_area" style="width: min-content; alignment: center; margin: auto">
+        <form name="register" action="/register" method="post" enctype="multipart/form-data">
+            {% if message %}{{ message }}{% endif %}<br>
+            Email: <input type="email" name="email" size="32" maxlength="256" required/><br><br>
+            Invite Code: <input type="text" name="invite_code" size="32" minlength="7" maxlength="7" required/><br><br>
+            Password: <input type="password" name="password" size="32" minlength="8" maxlength="128" required/><br>
+            <div style="text-align: center">
+                <button type="submit">Register</button>
+                <a href="https://yusen-tracker.com/login">
+                    <input type="button" value="Or Login"/>
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+<body>
+    {% include "includes/header.html" %}        <!-- req: None -->
+
+    {% if existing_users %}
+    <div class="boxed_area">        <!-- req: existing_users: [email: str, user_type: str, alt_id: int] -->
+        <table>
+            <tbody>
+                <tr>
+                    <th><a>Email:</a></th>
+                    <th><a>User Type:</a></th>
+                    <th><a>Suspended:</a></th>
+                </tr>
+                {% for user in existing_users %}
+                    <tr>
+                        <th><a>{{ user[0] }}</a></th>
+                        <th><a>{{ user[1] }}</a></th>
+                        <th><a>{{ user[2] }}</a></th>
+                        <th><a href="/user_manager/{{ user[3] }}"><button>manage user</button></a></th>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</body>
+</html>

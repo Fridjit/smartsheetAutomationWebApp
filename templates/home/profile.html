@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+    </style>
+</head>
+<body>
+    {% include "includes/header.html" %}        <!-- req: None -->
+
+    {% if user_type == 'supervisor' or user_type == 'wc_admin' %}
+    <div class="boxed_area">        <!-- req: user_type: str -->
+        <!-- personal navigator, specific to user type pages-->
+        {% if user_type == 'supervisor' %}<a href="/invite_codes">Invite Codes</a> |{% endif %}
+        <a href="/users">Users</a>
+    </div>
+    {% endif %}
+
+    <div class="boxed_area">        <!-- req: None -->
+        <!-- password change -->
+        <form method="post" action="/profile" name="change_password">
+            Change Password. {{ password_message }}<br><br>
+
+            Old Password: <input type="password" name="current_password" size="24" minlength="8" maxlength="128" required/><br><br>
+            New Password: <input type="password" name="new_password" size="24" minlength="8" maxlength="128" required/><br><br>
+            Repeat New Password: <input type="password" name="new_password_confirm" size="24" minlength="8" maxlength="128" required/><br>
+            <button type="submit" name="change_password" value="True">Change Password</button>
+        </form>
+    </div>
+
+</body>
+</html>

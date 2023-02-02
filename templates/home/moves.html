@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moves</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+<body>
+    <table>
+        <tbody >
+            {% for move in moves %}
+                <tr>
+                    <th><a href="https://yusen-tracker.com/moves/{{ move[0] }}">{{ move[0] }}</a></th>
+                    <th><a href="https://yusen-tracker.com/moves/{{ move[0] }}">{{ move[2] }}</a></th>
+                    <th><a href="https://yusen-tracker.com/moves/{{ move[0] }}">{{ move[3] }}</a></th>
+                    <th><a href="https://yusen-tracker.com/moves/{{ move[0] }}">{{ move[4] }}</a></th>
+                    <th><a href="https://yusen-tracker.com/moves/{{ move[0] }}">{{ move[5] }}</a></th>
+                    <th><a href="https://yusen-tracker.com/moves/{{ move[0] }}">{{ move[6] }}</a></th>
+                    <th><a href="https://yusen-tracker.com/moves/{{ move[0] }}">{{ move[7] }}</a></th>
+                    <th><a href="https://yusen-tracker.com/moves/{{ move[0] }}">{{ move[8] }}</a></th>
+                    <th><a href="https://yusen-tracker.com/moves/{{ move[0] }}">{{ move[9] }}</a></th>
+                    <th><a href="https://yusen-tracker.com/moves/{{ move[0] }}">{{ move[10] }}</a></th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
