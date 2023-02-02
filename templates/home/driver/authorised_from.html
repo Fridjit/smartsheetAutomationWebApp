@@ -1,0 +1,16 @@
+<div class="boxed_area">
+    Authorised from: {{ authorised_from_location }}
+    {% if wc_admin %}
+        <form name="location_update" action="/driver" method="post" enctype="multipart/form-data">
+            <label for="new_location">Change location to:</label>
+            <select name="new_location" id="new_location">
+                {% for location in locations %}
+                    <option value="{{ location }}">{{ location }}</option>
+                {% endfor %}
+            </select>
+            <input type="hidden" name="scac" value="{{ scac }}" />
+            <input type="hidden" name="driver_id" value="{{ driver_id }}" />
+            <button type="submit">Update location</button>
+        </form>
+    {% endif %}
+</div>

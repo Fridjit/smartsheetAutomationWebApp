@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Manager</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+<body>
+    {% include "includes/header.html" %}        <!-- req: None -->
+
+    <!-- current user info -->
+    <div class="boxed_area">        <!-- req: object_email: str, object_user_type: str, object_is_suspended: bool:-->
+        <table>
+            <tbody>
+                <tr>
+                    <th><a>Email:</a></th>
+                    <th><a>User Type:</a></th>
+                    <th><a>Suspended:</a></th>
+                    {% if object_user_type == 'dispatch' %}
+                        <th><a>Carrier:</a></th>
+                    {% else %}
+                        <th><a>Location:</a></th>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <th><a>{{ object_email }}</a></th>
+                    <th><a>{{ object_user_type }}</a></th>
+                    <th><a>{{ object_is_suspended }}</a></th>
+                    {% if object_user_type == 'dispatch' %}
+                        <th><a>{{ object_carrier }}</a></th>
+                    {% else %}
+                        <th><a>{{ object_location }}</a></th>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    {% if object_user_type == 'dispatch' %}
+    <div class="boxed_area">
+        <form name="scac_update" action="/user_manager/{{ object_alternative_id }}" method="post" enctype="multipart/form-data">
+            <label for="new_scac">Change SCAC to:</label>
+            <select name="new_scac" id="new_scac">
+                {% for scac in scac_list %}
+                    <option value="{{ scac }}">{{ scac }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Change SCAC</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="boxed_area">
+        <form name="location_update" action="/user_manager/{{ object_alternative_id }}" method="post" enctype="multipart/form-data">
+            <label for="new_location">Change location to:</label>
+            <select name="new_location" id="new_location">
+                {% for location in locations %}
+                    <option value="{{ location }}">{{ location }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Update location</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="boxed_area">
+        <form name="type_update" action="/user_manager/{{ object_alternative_id }}" method="post" enctype="multipart/form-data">
+            <label for="new_user_type">New User Type:</label>
+            <select name="new_user_type" id="new_user_type">
+                {% for user_type in user_types %}
+                    <option value="{{ user_type }}">{{ user_type }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Change User Type</button>
+        </form>
+    </div>
+
+    <div class="boxed_area">        <!-- req: object_alternative_id: str, object_is_suspended: bool -->
+        <form method="post" action="/user_manager/{{ object_alternative_id }}" name="delete_or_suspend" enctype="multipart/form-data">
+            <!-- Suspend/unSuspend user -->
+            {% if object_is_suspended %}
+                <a><button type="submit" name="un_suspend_user" value="{{ object_alternative_id }}">Unban User</button></a>
+            {% else %}
+                <a><button type="submit" name="suspend_user" value="{{ object_alternative_id }}">Suspend User</button></a>
+            {% endif %}
+
+            <!-- Delete user -->
+            <a><button type="submit" name="delete_user" value="{{ object_alternative_id }}">Delete User</button></a>
+        </form>
+    </div>
+</body>
+</html>

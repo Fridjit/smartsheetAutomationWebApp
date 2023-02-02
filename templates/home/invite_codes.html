@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invite Codes</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+<body>
+    {% include "includes/header.html" %}        <!-- req: None -->
+
+    <div class="boxed_area">        <!-- req: user_types: [user_type: str] -->
+        <form method="post" action="/invite_codes" name="invite_codes">
+            Email: <input type="email" name="email" size="32" maxlength="256" required/><br><br>
+            <label for="user_type">User type:</label>
+                <select name="user_type" id="user_type">
+                    {% for user_type in user_types %}
+                        <option value="{{ user_type }}">{{ user_type }}</option>
+                    {% endfor %}
+                </select>
+            <button type="submit">invite</button>
+        </form>
+    </div>
+
+    {% if existing_invites %}
+    <div class="boxed_area">        <!-- req: existing_invites: [email: str, invite_code: str, user_type: str] -->
+        <table>
+            <tbody>
+                <tr>
+                    <th><a>Email</a></th>
+                    <th><a>Invite Code</a></th>
+                    <th><a>User Type</a></th>
+                </tr>
+                {% for invite in existing_invites %}
+                <form method="post" action="/invite_codes" name="delete_invite_code">
+                    <tr>
+                        <input type="hidden" name="invite_code_to_delete" value="{{ invite[1] }}" />
+                        <th><a>{{ invite[0] }}</a></th>
+                        <th><a>{{ invite[1] }}</a></th>
+                        <th><a>{{ invite[2] }}</a></th>
+                        <th><a><button type="submit">delete</button></a></th>
+                    </tr>
+                </form>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</body>

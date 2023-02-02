@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Driver</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+<body>
+    {% include "includes/header.html" %}        <!-- req: None -->
+
+    {% if full_request %}
+        {% include "home/driver/info.html" %}        <!-- req:: scac: str, driver_id: str, assigned_customer: str, driver_name: str, truck_number: str, license_plate: str -->
+        {% include "home/driver/authorised_from.html" %}     <!-- req:: authorised_from_location: str, wc_admin: bool, locations: [str] -->
+        {% include "home/driver/current_move.html" %}        <!-- req:: current_move_id: str, current_container_number: str -->
+        {% include "home/driver/next_move.html" %}
+        {% include "home/driver/check_in_new.html" %}       <!-- check in a new driver -->
+    {% else %}
+        {% include "home/driver/search.html" %}       <!-- search for a driver -->
+    {% endif %}
+
+
+</body>
+</html>
